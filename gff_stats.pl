@@ -14,7 +14,7 @@ use strict;
 
 die "Usage:  gff_stats.pl <input_filename>\n" if ($#ARGV+1 < 1);
 
-my ($pAnnot, $pTypes, $pRefs) = loadGFF($INPUT_FILE, \@ANNOT_TYPES, \@CHROMOSOMES);
+my ($pAnnot, $pTypes, $pRefs) = loadGFF($INPUT_FILE);#, \@ANNOT_TYPES, \@CHROMOSOMES);
 
 # Display annotation counts per reference
 print "Chromosomes:\n";
@@ -74,6 +74,7 @@ sub loadGFF {
 	my $line;
 	my @tok;
 	while( $line = <INF> ) {
+		next if ($line =~ /^#/);
 		chomp $line;
 		@tok = split /\t/,$line;
 		my $ref    = $tok[0];
